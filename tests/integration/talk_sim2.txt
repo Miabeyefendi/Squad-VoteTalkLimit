@@ -1,0 +1,8 @@
+token bucket: holds T s of speech, refills T/(T+M) per second, empty bucket = muted for M s
+T   M   | speech heard  utterances whole | spam audible   rule-aware spammer    
+3   5   | 100.0%        100.0%           |  39.8%          39.1%
+3   8   | 100.0%        100.0%           |  29.3%          30.0%
+4   5   | 100.0%        100.0%           |  48.0%          47.1%
+4   8   | 100.0%        100.0%           |  35.8%          36.0%
+4   10  | 100.0%        100.0%           |  29.9%          32.3%
+5   8   | 100.0%        100.0%           |  43.1%          39.5%

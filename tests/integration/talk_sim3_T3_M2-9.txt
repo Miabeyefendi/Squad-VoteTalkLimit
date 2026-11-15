@@ -1,0 +1,13 @@
+token bucket, T = 3 s of speech, mute M seconds (model: 100 s end screen, normal player 1-4 s sentences, spammer 0.8 s phrase every 1.1 s)
+M   | speech heard  sentences whole  | spam audible  rule-aware spam | spam cut (points)
+2   | 100.0%        100.0%           |  62.5%         44.1%          | -10
+3   | 100.0%        100.0%           |  52.8%         44.1%          | -20
+4   | 100.0%        100.0%           |  45.4%         44.1%          | -27
+5   | 100.0%        100.0%           |  39.8%         39.1%          | -33
+6   | 100.0%        100.0%           |  35.0%         35.7%          | -38
+7   | 100.0%        100.0%           |  32.6%         32.3%          | -40
+8   | 100.0%        100.0%           |  29.3%         30.0%          | -44
+9   | 100.0%        100.0%           |  27.3%         26.9%          | -46
+no gate: spam audible 73%
+arithmetic duty T/(T+M): M=2 60%, M=3 50%, M=4 43%, M=5 38%, M=6 33%, M=7 30%, M=8 27%, M=9 25%
+three 2.5 s sentences 1.1 s apart (7.5 s of speech), seconds heard: M=2 7.5, M=3 7.5, M=4 6.9, M=5 6.1, M=6 5.0, M=7 4.8, M=8 4.5, M=9 4.4

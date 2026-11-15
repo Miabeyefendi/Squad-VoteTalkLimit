@@ -1,0 +1,9 @@
+[Modding.Core]
+Name=VoteTalkLimit
+Description=Experiment: probes how to limit how long each player can talk on the end of match scoreboard and map vote screens.
+MD5=
+ID=0
+Version=c85324e59aa6d81b528f0793eacf0237
+MajorVersion=21
+ChangeListNumber=687969
+

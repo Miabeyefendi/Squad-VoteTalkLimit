@@ -1,0 +1,7 @@
+spam audible (share of the gated time, one continuous spammer) by length of the gated window; each speaker starts with a full bucket
+T / M     | 30 s     60 s     105 s    210 s    | cut time for a long sentence
+3 / 6     |  42.7%    37.3%    36.2%    34.3%   | 4.5 s
+3 / 8     |  35.0%    31.2%    29.2%    29.0%   | 4.1 s
+4 / 8     |  39.7%    35.8%    35.4%    35.3%   | 6.0 s
+4 / 10    |  37.0%    34.2%    31.8%    29.9%   | 5.6 s
+4 / 12    |  35.0%    30.0%    27.3%    26.7%   | 5.3 s
