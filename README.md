@@ -158,6 +158,8 @@ A talk simulation (not live data) compared the defaults with no limit. With `T =
 ## ❓ FAQ
 **Which variant should I use?** Try `client-rpc` first if you can install the mod on clients, since the server-side mute call is the less likely one to work. Test both if you can, and open an issue with what happened.
 
+**Is there a version without ModLoader?** No. Both variants (`server-only` and `client-rpc`) are ModLoader rulesets. A vanilla route like the SquadJS plugin of [Smart Shuffle](https://github.com/Miabeyefendi/Squad-SmartShuffle) is not possible here, because SquadJS has no voice control.
+
 **Will it mute people on the scoreboard or in the match?** No. The gate only opens during the end-of-match votes.
 
 **Can a player stay muted after leaving or after a crash?** The design says no for `client-rpc`: the mute lives and dies with a helper object. For `server-only` it is an open question: the server unmutes everybody when the vote ends, but whether a client keeps a toggled mute in its own settings is not verified. Please report any case where this is wrong.

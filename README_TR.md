@@ -158,6 +158,8 @@ Bir konuşma simülasyonu (canlı veri değil) varsayılanları sınırsız duru
 ## ❓ SSS
 **Hangi varyantı kullanmalıyım?** Modu istemcilere kurabiliyorsan önce `client-rpc` dene, çünkü sunucudan mute çağrısının çalışma ihtimali daha düşük. Mümkünse ikisini de dene ve ne olduğunu issue olarak yaz.
 
+**ModLoader'sız bir sürüm var mı?** Hayır. İki varyant da (`server-only` ve `client-rpc`) ModLoader ruleset'idir. [Smart Shuffle](https://github.com/Miabeyefendi/Squad-SmartShuffle)'ın SquadJS eklentisi gibi vanilla bir yol burada mümkün değil, çünkü SquadJS'te ses kontrolü yok.
+
 **Scoreboard'da ya da maç içinde susturur mu?** Hayır. Kapı sadece maç sonu oylamalarında açılır.
 
 **Oyuncu ayrıldıktan ya da çöktükten sonra susturulmuş kalabilir mi?** `client-rpc` için tasarım hayır diyor: mute bir yardımcı nesneyle yaşar ve ölür. `server-only` için açık soru: sunucu oylama bitince herkesi açar ama istemcinin değiştirilmiş mute'u kendi ayarında tutup tutmadığı doğrulanmadı. Yanlış olduğu bir durum görürsen bildir.
