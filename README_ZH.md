@@ -96,6 +96,8 @@
 
 两个 `-cooked` zip 包含已打包的 mod（`.mi`、`.uplugin`、图标、预览图，以及服务器和客户端用的 `Content/Paks` 文件夹）。它们用[教程](./TUTORIAL_ZH.md)中的 SDK 10.6 cook 命令构建，并在本地服务器上验证过。其 `.mi` 中是 `ID=0`，请先给它一个 ID，见下面的服务器设置说明。
 
+`client-rpc` 变体（0.1.1）也已上传到 Steam Workshop 供测试，ID 为 `3844006456`（[链接](https://steamcommunity.com/sharedfiles/filedetails/?id=3844006456)）。目前是隐藏的，所以在更改可见性之前，该链接只对上传的账号有效。服务器以匿名方式下载 Workshop mod，因此隐藏的条目暂时不能在服务器上使用。本仓库中的 `.mi` 文件保持 `ID=0`。
+
 ### 服务器设置说明（在本地服务器上验证）
 
 以下各点来自运行真实的专用服务器，而不是来自文档。

@@ -96,6 +96,8 @@ Los dos zip son las carpetas del mod del SDK (`.mi`, `.uplugin`, icono, vista pr
 
 Los dos zips `-cooked` contienen el mod empaquetado (`.mi`, `.uplugin`, icono, vista previa y las carpetas `Content/Paks` para el servidor y el cliente). Se construyeron con el comando de cook del SDK 10.6 del [tutorial](./TUTORIAL_ES.md) y se comprobaron en un servidor local. Su `.mi` tiene `ID=0`, así que ponle antes un ID, mira las notas de configuración del servidor más abajo.
 
+La variante `client-rpc` (0.1.1) también está subida al Steam Workshop para pruebas, ID `3844006456` ([enlace](https://steamcommunity.com/sharedfiles/filedetails/?id=3844006456)). Por ahora está oculta, así que el enlace solo funciona para la cuenta que la subió hasta que se cambie la visibilidad. Los servidores descargan los mods del Workshop de forma anónima, por lo que un elemento oculto aún no se puede usar en un servidor. Los archivos `.mi` de este repositorio mantienen `ID=0`.
+
 ### Notas de configuración del servidor (comprobadas en un servidor local)
 
 Estos puntos salieron de ejecutar un servidor dedicado real, no de la documentación.
