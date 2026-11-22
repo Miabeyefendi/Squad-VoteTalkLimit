@@ -158,6 +158,8 @@ Una simulación de habla (no son datos reales) comparó los valores por defecto 
 ## ❓ Preguntas frecuentes
 **¿Qué variante debo usar?** Prueba primero `client-rpc` si puedes instalar el mod en los clientes, porque la llamada de silencio desde el servidor es la menos probable de funcionar. Prueba ambas si puedes y abre un issue con lo que pasó.
 
+**¿Hay una versión sin ModLoader?** No. Las dos variantes (`server-only` y `client-rpc`) son rulesets de ModLoader. Una vía vanilla como el plugin de SquadJS de [Smart Shuffle](https://github.com/Miabeyefendi/Squad-SmartShuffle) no es posible aquí, porque SquadJS no controla la voz.
+
 **¿Silencia a la gente en el marcador o durante la partida?** No. La puerta solo se abre durante las votaciones de fin de partida.
 
 **¿Puede un jugador quedar silenciado tras irse o tras un fallo?** Para `client-rpc` el diseño dice que no: el silencio vive y muere con un objeto auxiliar. Para `server-only` es una duda abierta: el servidor reactiva a todos al terminar la votación, pero no está verificado si un cliente conserva un silencio alternado en sus propios ajustes. Informa de cualquier caso en que esto falle.

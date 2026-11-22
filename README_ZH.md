@@ -158,6 +158,8 @@
 ## ❓ 常见问题
 **该用哪个变体？** 如果能在客户端安装 mod，先试 `client-rpc`，因为服务器端的静音调用最不可能生效。能的话两个都测，并开一个 issue 说明结果。
 
+**有不需要 ModLoader 的版本吗？** 没有。两个变体（`server-only` 和 `client-rpc`）都是 ModLoader ruleset。像 [Smart Shuffle](https://github.com/Miabeyefendi/Squad-SmartShuffle) 的 SquadJS 插件那样的原版路线在这里不可行，因为 SquadJS 无法控制语音。
+
 **会在计分板或对局中静音吗？** 不会。开关只在对局结束后的投票期间打开。
 
 **玩家离开或崩溃后会一直被静音吗？** 对 `client-rpc`，设计上不会：静音随一个辅助对象生灭。对 `server-only` 这是未解决的问题：服务器在投票结束时解除所有人，但客户端是否会在自己的设置中保留被切换的静音尚未验证。如果发现不符的情况，请报告。
