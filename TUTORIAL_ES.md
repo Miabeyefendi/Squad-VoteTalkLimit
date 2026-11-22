@@ -57,11 +57,11 @@ docs/guides/                         notas
 
 **G. Guarda.** Guarda todos los assets.
 
-**H. Empaqueta el mod.** Usa el comando de empaquetado de mods del SDK para el mod `VoteTalkLimit`. La documentación del SDK lo describe. El resultado es el mod cocinado que un servidor puede cargar.
+**H. Empaqueta el mod.** En el Modding Hub abre la pestaña Share y pulsa Package. Si acaba en `Cook failed`, usa el comando de [Solución de problemas](#-solución-de-problemas). El resultado contiene `Content/Paks/WindowsServer` para el servidor y `Content/Paks/Windows` para los clientes.
 
 **I. Sube a Workshop.** Sube el mod empaquetado al Steam Workshop como elemento privado o no listado para que solo lo use tu servidor de pruebas.
 
-**J. Añádelo a ModLoader.** En el servidor, añade el mod a ModLoader como ruleset según describe la página de ModLoader. El propio mod ModLoader ya debe estar en el servidor.
+**J. Añádelo a ModLoader.** Copia la carpeta del mod empaquetado en `SquadGame/Plugins/Mods/` del servidor, junto con el mod ModLoader. Pon la capa `ModLoader_v1` la primera de la rotación y registra el ruleset en `SquadGame/Saved/ModLoader/ModLoader.json` (forma de la versión 2, mira el README). Un mod sin ID de Steam (`ID=0` en el `.mi`) se omite: dale cualquier número para una prueba local o súbelo como elemento no listado.
 
 **K. Ajustes opcionales.** Crea o edita `CustomOptions.cfg` en la carpeta de configuración del servidor. Consulta [Ajustes](#️-ajustes).
 
@@ -143,6 +143,22 @@ La puerta y el presupuesto funcionan, solo falla el paso del silencio. Infórmal
 ### Alguien se queda silenciado
 
 Quita el mod de ModLoader y reinicia el servidor, luego infórmalo. Esto no debería ocurrir.
+
+
+### El empaquetado acaba en Cook failed
+
+Los assets del propio SDK `BP_MutableSoldier` y `SQSquidBot` dan errores porque al SDK le falta el módulo `SQAimAssist`, y el cook los cuenta como fallo. El mod no es la causa. Cierra el editor y ejecuta el cook a mano con `-IgnoreCookErrors`:
+
+```powershell
+$s = 'C:\path\to\SquadEditor'
+& "$s\UnrealEngine\Engine\Build\BatchFiles\RunUAT.bat" -noP4 BuildCookRun -Project="$s\Squad\SquadGame.uproject" -dlcname=VoteTalkLimit -cook -stage -pak -iostore -compressed -SKIPEDITORCONTENT -BasedOnReleaseVersion=20 -DLCIncludeEngineContent -manifests -VersionCookedContent -IgnoreCookErrors -AdditionalCookerOptions="-IgnoreWeaponSkinRefresh -cooksinglepackagenorefs -nullrhi -IgnoreCookErrors" -server -targetplatform=Win64
+```
+
+El resultado queda en `Squad/Plugins/Mods/VoteTalkLimit/Saved/StagedBuilds/WindowsServer/SquadGame/Plugins/Mods/VoteTalkLimit` (servidor) y en la misma ruta bajo `Windows` (cliente). Copia el archivo `.mi` junto al `.uplugin`.
+
+### El servidor omite el mod
+
+El registro dice `Failed to find a valid mod ID for VoteTalkLimit (needs to be uploaded to Steam)`. Pon un número en `ID=` del `.mi` y añádelo a `ModLoadOrder` en `ServerConfig/ModsConfig.cfg`, o sube el mod como elemento no listado del Workshop.
 
 ---
 

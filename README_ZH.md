@@ -28,6 +28,8 @@
 
 服务器端的逻辑（投票开关、说话额度、提示、设置）可以编译，并遵循 Squad SDK 文档。未解决的问题在最后一步：服务器能否真正对其他所有人切断某名玩家的语音。SDK 没有为此提供文档化的服务器调用，它公开的语音函数看起来属于客户端。本仓库提供两种尝试方式，以便用两名玩家做一次真实测试，看看哪一种（如果有）有效。
 
+**加载已于 2026-11-22 验证**：在本地 Windows 专用服务器（Squad 10.6）上，ModLoader 能挂载该 mod，并把 `BP_VoteTalkLimit` 作为 ruleset 加入，两个变体都没有 Blueprint 错误。与玩家一起的语音测试仍未完成。
+
 ---
 
 ## ✨ 亮点
@@ -82,6 +84,26 @@
 |---|---|---|
 | `VoteTalkLimit-server-only.zip` | `599c70eff6808c441df307442fdc092ae66181087352d3f16f8d47626d95086c` | server-only 变体 |
 | `VoteTalkLimit-client-rpc.zip` | `73dddefc3fd73bd020b8d52470c3766b0c9e8817e0129d6caf71afcdf425e1ee` | client-rpc 变体 |
+
+### 服务器设置说明（在本地服务器上验证）
+
+以下各点来自运行真实的专用服务器，而不是来自文档。
+
+- **本地 mod 需要 ID。** `.mi` 文件里 `ID=0` 会被跳过（`Failed to find a valid mod ID for VoteTalkLimit (needs to be uploaded to Steam)`）。本地测试时，在服务器副本（以及客户端副本）的 `ID=` 中填任意数字，并把它加入 `ServerConfig/ModsConfig.cfg` 的 `ModLoadOrder`。正式使用时，把 mod 作为不公开条目上传到 Workshop。
+- **从 ModLoader 层开始。** 把 `ModLoader_v1` 放在轮换的第一位。之后 ModLoader 会读取 `SquadGame/Saved/ModLoader/ModLoader.json`。
+- **`ModLoader.json` 是版本 2。** 条目是带 `true` 标记的对象。旧的列表写法会被自动转换，文件会被重写：
+
+```json
+{
+  "Version": 2,
+  "rulesets": {
+    "/VoteTalkLimit/BP_VoteTalkLimit.BP_VoteTalkLimit_C": true
+  }
+}
+```
+
+- **在 SDK 10.6 中打包。** Modding Hub 的打包按钮可能以 `Cook failed` 结束，因为 SDK 自带资源（`BP_MutableSoldier`、`SQSquidBot`）因缺少 `SQAimAssist` 模块而报错。mod 本身没有问题。教程里给出了可用的带 `-IgnoreCookErrors` 的 `BuildCookRun` 命令。
+- **客户端。** 使用 `client-rpc` 时，客户端也必须有该 mod。投票开始前必须有一场比赛在进行，所以测试至少需要一名玩家。
 
 ---
 
