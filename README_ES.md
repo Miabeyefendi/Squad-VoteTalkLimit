@@ -28,7 +28,14 @@
 
 La lógica del servidor (la puerta de votación, el presupuesto de voz, los avisos, los ajustes) compila y sigue la documentación del Squad SDK. La duda está en el último paso: si un servidor puede cortar de verdad la voz de un jugador para todos los demás. El SDK no documenta ninguna llamada de servidor para eso, y las funciones de voz que expone parecen del lado del cliente. Este repositorio ofrece dos formas de probarlo para que una prueba real con dos jugadores diga cuál funciona, si alguna.
 
-**La carga se comprobó el 2026-11-22** en un servidor dedicado local de Windows (Squad 10.6): ModLoader monta el mod y añade `BP_VoteTalkLimit` como ruleset en las dos variantes, sin errores de Blueprint. La prueba de voz con jugadores sigue abierta.
+**Comprobado el 2026-11-22.** Las dos variantes cargan en un servidor dedicado local de Windows (Squad 10.6) y las dos se ejecutaron en el editor del SDK (Play In Editor, un jugador local, una votación iniciada desde un script) sin errores de Blueprint ni cierres:
+
+- la puerta se abre mientras corre una votación y se cierra al terminar, y entonces se limpia todo
+- el jugador empieza con el presupuesto completo (4,0 s) y hablar lo gasta
+- un presupuesto vacío se convierte en silencio, y el presupuesto vuelve al acabar el tiempo de silencio
+- `client-rpc` crea `BP_VTLClientHelper`, propiedad del controlador del que habla, con una vida de unos segundos igual al tiempo de silencio, y desaparece cuando termina el silencio
+
+**Sigue sin comprobarse:** si la voz se corta de verdad para los demás jugadores (hace falta un segundo jugador), los avisos en pantalla y la lectura de `CustomOptions.cfg` (Play In Editor no lo carga).
 
 ---
 

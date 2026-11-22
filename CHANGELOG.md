@@ -12,7 +12,7 @@ All notable changes to **Squad-VoteTalkLimit** are recorded here. The format fol
 
 ### Documentation
 
-- Both variants were loaded on a local Windows dedicated server (Squad 10.6) with ModLoader: the mod mounts and `BP_VoteTalkLimit` is added as a ruleset, with no Blueprint errors. The voice test with players is still open.
+- Both variants were loaded on a local Windows dedicated server (Squad 10.6) with ModLoader and run in the SDK editor (Play In Editor, one local player, a vote started from a script), with no Blueprint errors and no crash. The gate, the talk budget, the mute, the helper actor and the cleanup behaved as designed. Whether the voice is cut for other players, the on-screen notices and reading `CustomOptions.cfg` are still unverified.
 - Added server setup notes in all five languages: a local mod needs a non-zero ID in its `.mi`, the first layer must be `ModLoader_v1`, `ModLoader.json` is now version 2, and packaging in SDK 10.6 needs `-IgnoreCookErrors`
 - Tutorial steps H and J rewritten to match, with two new troubleshooting entries
 
