@@ -8,7 +8,11 @@ All notable changes to **Squad-VoteTalkLimit** are recorded here. The format fol
 
 ---
 
-## [Unreleased]
+## [0.1.1] - 2026-11-22
+
+### Added
+
+- Two packaged (cooked) zips, one per variant, with the server and client paks, ready for `SquadGame/Plugins/Mods/`
 
 ### Documentation
 
@@ -29,4 +33,5 @@ First public experiment. Neither variant has been tested on a live server.
 - Talk simulations used to choose the defaults
 - README and tutorial in English, Turkish, Spanish, Chinese and Russian
 
+[0.1.1]: https://github.com/Miabeyefendi/Squad-VoteTalkLimit/releases/tag/v0.1.1
 [0.1.0]: https://github.com/Miabeyefendi/Squad-VoteTalkLimit/releases/tag/v0.1.0

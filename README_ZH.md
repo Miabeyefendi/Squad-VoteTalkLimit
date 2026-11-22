@@ -91,6 +91,10 @@
 |---|---|---|
 | `VoteTalkLimit-server-only.zip` | `599c70eff6808c441df307442fdc092ae66181087352d3f16f8d47626d95086c` | server-only 变体 |
 | `VoteTalkLimit-client-rpc.zip` | `73dddefc3fd73bd020b8d52470c3766b0c9e8817e0129d6caf71afcdf425e1ee` | client-rpc 变体 |
+| `VoteTalkLimit-server-only-cooked.zip` | `9e71d506172480a1aea5a24e4cd5cae611a08388c0e89643dec602e4414b9d5b` | server-only 变体，已打包（服务器和客户端 pak） |
+| `VoteTalkLimit-client-rpc-cooked.zip` | `03493c7a6b2f532d2ba8c1c929669ba2d8bef36b1f95362f5034bb602a280e59` | client-rpc 变体，已打包（服务器和客户端 pak） |
+
+两个 `-cooked` zip 包含已打包的 mod（`.mi`、`.uplugin`、图标、预览图，以及服务器和客户端用的 `Content/Paks` 文件夹）。它们用[教程](./TUTORIAL_ZH.md)中的 SDK 10.6 cook 命令构建，并在本地服务器上验证过。其 `.mi` 中是 `ID=0`，请先给它一个 ID，见下面的服务器设置说明。
 
 ### 服务器设置说明（在本地服务器上验证）
 
