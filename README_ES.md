@@ -91,6 +91,10 @@ Los dos zip son las carpetas del mod del SDK (`.mi`, `.uplugin`, icono, vista pr
 |---|---|---|
 | `VoteTalkLimit-server-only.zip` | `599c70eff6808c441df307442fdc092ae66181087352d3f16f8d47626d95086c` | variante server-only |
 | `VoteTalkLimit-client-rpc.zip` | `73dddefc3fd73bd020b8d52470c3766b0c9e8817e0129d6caf71afcdf425e1ee` | variante client-rpc |
+| `VoteTalkLimit-server-only-cooked.zip` | `9e71d506172480a1aea5a24e4cd5cae611a08388c0e89643dec602e4414b9d5b` | server-only variante empaquetada (paks de servidor y de cliente) |
+| `VoteTalkLimit-client-rpc-cooked.zip` | `03493c7a6b2f532d2ba8c1c929669ba2d8bef36b1f95362f5034bb602a280e59` | client-rpc variante empaquetada (paks de servidor y de cliente) |
+
+Los dos zips `-cooked` contienen el mod empaquetado (`.mi`, `.uplugin`, icono, vista previa y las carpetas `Content/Paks` para el servidor y el cliente). Se construyeron con el comando de cook del SDK 10.6 del [tutorial](./TUTORIAL_ES.md) y se comprobaron en un servidor local. Su `.mi` tiene `ID=0`, así que ponle antes un ID, mira las notas de configuración del servidor más abajo.
 
 ### Notas de configuración del servidor (comprobadas en un servidor local)
 

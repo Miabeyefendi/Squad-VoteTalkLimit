@@ -91,6 +91,10 @@
 |---|---|---|
 | `VoteTalkLimit-server-only.zip` | `599c70eff6808c441df307442fdc092ae66181087352d3f16f8d47626d95086c` | вариант server-only |
 | `VoteTalkLimit-client-rpc.zip` | `73dddefc3fd73bd020b8d52470c3766b0c9e8817e0129d6caf71afcdf425e1ee` | вариант client-rpc |
+| `VoteTalkLimit-server-only-cooked.zip` | `9e71d506172480a1aea5a24e4cd5cae611a08388c0e89643dec602e4414b9d5b` | server-only вариант, упакованный (pak для сервера и клиента) |
+| `VoteTalkLimit-client-rpc-cooked.zip` | `03493c7a6b2f532d2ba8c1c929669ba2d8bef36b1f95362f5034bb602a280e59` | client-rpc вариант, упакованный (pak для сервера и клиента) |
+
+Два архива `-cooked` содержат упакованный мод (`.mi`, `.uplugin`, значок, превью и папки `Content/Paks` для сервера и клиента). Они собраны командой cook для SDK 10.6 из [руководства](./TUTORIAL_RU.md) и проверены на локальном сервере. В их `.mi` стоит `ID=0`, поэтому сначала задайте ID, см. заметки по настройке сервера ниже.
 
 ### Заметки по настройке сервера (проверено на локальном сервере)
 

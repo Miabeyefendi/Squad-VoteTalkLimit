@@ -91,6 +91,10 @@ Aynı anda tek varyant kur. İkisi de `VoteTalkLimit` mod adını kullanır.
 |---|---|---|
 | `VoteTalkLimit-server-only.zip` | `599c70eff6808c441df307442fdc092ae66181087352d3f16f8d47626d95086c` | server-only varyantı |
 | `VoteTalkLimit-client-rpc.zip` | `73dddefc3fd73bd020b8d52470c3766b0c9e8817e0129d6caf71afcdf425e1ee` | client-rpc varyantı |
+| `VoteTalkLimit-server-only-cooked.zip` | `9e71d506172480a1aea5a24e4cd5cae611a08388c0e89643dec602e4414b9d5b` | server-only varyantı, paketlenmiş (sunucu ve istemci pak dosyaları) |
+| `VoteTalkLimit-client-rpc-cooked.zip` | `03493c7a6b2f532d2ba8c1c929669ba2d8bef36b1f95362f5034bb602a280e59` | client-rpc varyantı, paketlenmiş (sunucu ve istemci pak dosyaları) |
+
+İki `-cooked` zip paketlenmiş modu içerir (`.mi`, `.uplugin`, simge, önizleme ve sunucu ile istemci için `Content/Paks` klasörleri). [Rehberdeki](./TUTORIAL_TR.md) SDK 10.6 cook komutuyla üretildi ve yerel sunucuda denendi. `.mi` dosyalarında `ID=0` var, önce bir ID ver, aşağıdaki sunucu kurulum notlarına bak.
 
 ### Sunucu kurulum notları (yerel sunucuda denendi)
 
