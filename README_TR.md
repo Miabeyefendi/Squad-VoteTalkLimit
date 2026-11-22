@@ -28,7 +28,14 @@
 
 Sunucu tarafındaki mantık (oylama kapısı, konuşma bütçesi, bildirimler, ayarlar) derleniyor ve Squad SDK belgelerine uyuyor. Açık soru son adımda: sunucu bir oyuncunun sesini diğer herkes için gerçekten kesebilir mi? SDK'da bunun için belgelenmiş bir sunucu çağrısı yok, sunduğu ses fonksiyonları da istemci tarafı gibi duruyor. Bu depo, iki oyuncuyla yapılacak canlı bir testin hangisinin (varsa) çalıştığını göstermesi için iki yol sunar.
 
-**Yükleme 2026-11-22'de denendi:** yerel bir Windows dedicated sunucuda (Squad 10.6) ModLoader modu bağlıyor ve `BP_VoteTalkLimit` iki varyantta da ruleset olarak ekleniyor, Blueprint hatası yok. Oyuncularla ses testi hâlâ açık.
+**2026-11-22'de denendi.** İki varyant da yerel bir Windows dedicated sunucuda (Squad 10.6) yükleniyor ve ikisi de SDK editöründe (Play In Editor, tek yerel oyuncu, oylama bir betikle başlatıldı) çalıştırıldı. Blueprint hatası ve çökme yok:
+
+- kapı oylama sürerken açılıyor, oylama bitince kapanıyor ve her şey temizleniyor
+- oyuncu tam bütçeyle (4,0 sn) başlıyor, konuşmak bütçeyi tüketiyor
+- bütçe bitince mute başlıyor, mute süresi dolunca bütçe geri geliyor
+- `client-rpc`, konuşanın kontrolcüsüne ait `BP_VTLClientHelper` yardımcısını doğuruyor, ömrü yaklaşık mute süresi kadar ve mute bitince yok oluyor
+
+**Hâlâ doğrulanmadı:** sesin diğer oyuncular için gerçekten kesilip kesilmediği (ikinci oyuncu gerekir), ekran mesajları ve `CustomOptions.cfg` okuması (Play In Editor bu dosyayı yüklemiyor).
 
 ---
 

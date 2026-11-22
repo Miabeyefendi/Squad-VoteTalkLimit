@@ -28,7 +28,14 @@
 
 The server-side logic (the vote gate, the talk budget, the notices, the settings) compiles and follows the Squad SDK documentation. The open question is the last step: whether a server can actually cut a player's voice for everyone else. The SDK has no documented server call for that, and the voice functions it does expose look client-side. This repository ships two ways to try it so that a live test with two players can tell which one, if any, works.
 
-**Loading was checked on 2026-11-22** on a local Windows dedicated server (Squad 10.6): ModLoader mounts the mod and adds `BP_VoteTalkLimit` as a ruleset, for both variants, without Blueprint errors. The voice test with players is still open.
+**Checked on 2026-11-22.** Both variants load on a local Windows dedicated server (Squad 10.6), and both were run in the SDK editor (Play In Editor, one local player, a vote started from a script) with no Blueprint errors and no crash:
+
+- the gate opens while a vote runs and closes when it ends, and everything is cleared at that point
+- a player gets a full budget (4.0 s) and talking drains it
+- an empty budget becomes a mute, and the budget comes back after the mute time
+- `client-rpc` spawns `BP_VTLClientHelper`, owned by the speaker's controller, with a lifespan of about the mute time, and it is gone when the mute ends
+
+**Still not verified:** whether the voice is really cut for other players (that needs a second player), the on-screen notices, and reading `CustomOptions.cfg` (Play In Editor does not load it).
 
 ---
 
