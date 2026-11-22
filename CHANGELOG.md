@@ -8,6 +8,14 @@ All notable changes to **Squad-VoteTalkLimit** are recorded here. The format fol
 
 ---
 
+## [Unreleased]
+
+### Documentation
+
+- Both variants were loaded on a local Windows dedicated server (Squad 10.6) with ModLoader: the mod mounts and `BP_VoteTalkLimit` is added as a ruleset, with no Blueprint errors. The voice test with players is still open.
+- Added server setup notes in all five languages: a local mod needs a non-zero ID in its `.mi`, the first layer must be `ModLoader_v1`, `ModLoader.json` is now version 2, and packaging in SDK 10.6 needs `-IgnoreCookErrors`
+- Tutorial steps H and J rewritten to match, with two new troubleshooting entries
+
 ## [0.1.0] - 2026-11-15
 
 First public experiment. Neither variant has been tested on a live server.

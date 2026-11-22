@@ -57,11 +57,11 @@ docs/guides/                         notlar
 
 **G. Kaydet.** Bütün varlıkları kaydet.
 
-**H. Modu paketle.** `VoteTalkLimit` modu için SDK'nın mod paketleme komutunu kullan. SDK belgeleri anlatır. Çıktı, sunucunun yükleyebileceği pişmiş moddur.
+**H. Modu paketle.** Modding Hub'da Share sekmesini aç ve Package'a bas. `Cook failed` ile biterse [Sorun giderme](#-sorun-giderme) bölümündeki komutu kullan. Çıktıda sunucu için `Content/Paks/WindowsServer`, istemciler için `Content/Paks/Windows` bulunur.
 
 **I. Workshop'a yükle.** Paketlenmiş modu Steam Workshop'a özel ya da listelenmemiş bir öğe olarak yükle, böylece sadece test sunucun kullanır.
 
-**J. ModLoader'a ekle.** Sunucuda modu, ModLoader sayfasının anlattığı gibi bir ruleset olarak ekle. ModLoader modunun kendisi sunucuda zaten olmalı.
+**J. ModLoader'a ekle.** Paketlenmiş mod klasörünü ModLoader modu ile birlikte sunucunun `SquadGame/Plugins/Mods/` klasörüne kopyala. Rotasyonda `ModLoader_v1` katmanını ilk sıraya koy ve ruleset'i `SquadGame/Saved/ModLoader/ModLoader.json` içine kaydet (sürüm 2 biçimi, README'ye bak). Steam ID'si olmayan mod (`.mi` içinde `ID=0`) atlanır: yerel testte herhangi bir sayı ver ya da listelenmemiş öğe olarak yükle.
 
 **K. İsteğe bağlı ayarlar.** Sunucu yapılandırma klasöründe `CustomOptions.cfg` dosyasını oluştur ya da düzenle. Bkz. [Ayarlar](#️-ayarlar).
 
@@ -143,6 +143,22 @@ Kapı ve bütçe çalışıyor, sadece mute adımı çalışmıyor. Varyant adı
 ### Biri susturulmuş kalıyor
 
 Modu ModLoader'dan çıkarıp sunucuyu yeniden başlat, sonra bildir. Bunun olmaması gerekir.
+
+
+### Paketleme Cook failed ile bitiyor
+
+SDK'nın kendi varlıkları `BP_MutableSoldier` ve `SQSquidBot`, SDK'da `SQAimAssist` modülü olmadığı için hata basar ve cook bunu başarısızlık sayar. Sebep mod değil. Editörü kapat, sonra cook'u `-IgnoreCookErrors` ile elle çalıştır:
+
+```powershell
+$s = 'C:\path\to\SquadEditor'
+& "$s\UnrealEngine\Engine\Build\BatchFiles\RunUAT.bat" -noP4 BuildCookRun -Project="$s\Squad\SquadGame.uproject" -dlcname=VoteTalkLimit -cook -stage -pak -iostore -compressed -SKIPEDITORCONTENT -BasedOnReleaseVersion=20 -DLCIncludeEngineContent -manifests -VersionCookedContent -IgnoreCookErrors -AdditionalCookerOptions="-IgnoreWeaponSkinRefresh -cooksinglepackagenorefs -nullrhi -IgnoreCookErrors" -server -targetplatform=Win64
+```
+
+Sonuç `Squad/Plugins/Mods/VoteTalkLimit/Saved/StagedBuilds/WindowsServer/SquadGame/Plugins/Mods/VoteTalkLimit` (sunucu) ve `Windows` altındaki aynı yolda (istemci). `.mi` dosyasını `.uplugin` dosyasının yanına kopyala.
+
+### Sunucu modu atlıyor
+
+Logda `Failed to find a valid mod ID for VoteTalkLimit (needs to be uploaded to Steam)` yazıyor. `.mi` içindeki `ID=` satırına bir sayı yaz ve `ServerConfig/ModsConfig.cfg` içindeki `ModLoadOrder` listesine ekle, ya da modu listelenmemiş Workshop öğesi olarak yükle.
 
 ---
 

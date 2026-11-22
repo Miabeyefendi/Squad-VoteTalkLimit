@@ -28,6 +28,8 @@
 
 Sunucu tarafındaki mantık (oylama kapısı, konuşma bütçesi, bildirimler, ayarlar) derleniyor ve Squad SDK belgelerine uyuyor. Açık soru son adımda: sunucu bir oyuncunun sesini diğer herkes için gerçekten kesebilir mi? SDK'da bunun için belgelenmiş bir sunucu çağrısı yok, sunduğu ses fonksiyonları da istemci tarafı gibi duruyor. Bu depo, iki oyuncuyla yapılacak canlı bir testin hangisinin (varsa) çalıştığını göstermesi için iki yol sunar.
 
+**Yükleme 2026-11-22'de denendi:** yerel bir Windows dedicated sunucuda (Squad 10.6) ModLoader modu bağlıyor ve `BP_VoteTalkLimit` iki varyantta da ruleset olarak ekleniyor, Blueprint hatası yok. Oyuncularla ses testi hâlâ açık.
+
 ---
 
 ## ✨ Öne çıkanlar
@@ -82,6 +84,26 @@ Aynı anda tek varyant kur. İkisi de `VoteTalkLimit` mod adını kullanır.
 |---|---|---|
 | `VoteTalkLimit-server-only.zip` | `599c70eff6808c441df307442fdc092ae66181087352d3f16f8d47626d95086c` | server-only varyantı |
 | `VoteTalkLimit-client-rpc.zip` | `73dddefc3fd73bd020b8d52470c3766b0c9e8817e0129d6caf71afcdf425e1ee` | client-rpc varyantı |
+
+### Sunucu kurulum notları (yerel sunucuda denendi)
+
+Bu maddeler belgeden değil, gerçek bir dedicated sunucu çalıştırılarak bulundu.
+
+- **Yerel modun ID'si olmalı.** `.mi` dosyasında `ID=0` varsa mod atlanır (`Failed to find a valid mod ID for VoteTalkLimit (needs to be uploaded to Steam)`). Yerel testte sunucudaki kopyanın (ve istemci kopyasının) `ID=` satırına herhangi bir sayı yaz ve `ServerConfig/ModsConfig.cfg` içindeki `ModLoadOrder` listesine ekle. Gerçek kullanımda modu Workshop'a listelenmemiş öğe olarak yükle.
+- **ModLoader katmanıyla başla.** Rotasyonda `ModLoader_v1` ilk sırada olsun. ModLoader sonra `SquadGame/Saved/ModLoader/ModLoader.json` dosyasını okur.
+- **`ModLoader.json` sürüm 2.** Girdiler `true` bayraklı nesnelerdir. Eski liste biçimi otomatik dönüştürülür ve dosya yeniden yazılır:
+
+```json
+{
+  "Version": 2,
+  "rulesets": {
+    "/VoteTalkLimit/BP_VoteTalkLimit.BP_VoteTalkLimit_C": true
+  }
+}
+```
+
+- **SDK 10.6'da paketleme.** Modding Hub'ın paketle düğmesi `Cook failed` ile bitebilir, çünkü SDK'nın kendi varlıkları (`BP_MutableSoldier`, `SQSquidBot`) eksik `SQAimAssist` modülü yüzünden hata basar. Mod sorunsuzdur. Rehberde `-IgnoreCookErrors` ile çalışan `BuildCookRun` komutu var.
+- **İstemciler.** `client-rpc` ile mod istemcide de olmalı. Oylama başlamadan önce bir maçın çalışıyor olması gerekir, yani test için en az bir oyuncu lazım.
 
 ---
 

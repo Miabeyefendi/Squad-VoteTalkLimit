@@ -28,6 +28,8 @@
 
 La lógica del servidor (la puerta de votación, el presupuesto de voz, los avisos, los ajustes) compila y sigue la documentación del Squad SDK. La duda está en el último paso: si un servidor puede cortar de verdad la voz de un jugador para todos los demás. El SDK no documenta ninguna llamada de servidor para eso, y las funciones de voz que expone parecen del lado del cliente. Este repositorio ofrece dos formas de probarlo para que una prueba real con dos jugadores diga cuál funciona, si alguna.
 
+**La carga se comprobó el 2026-11-22** en un servidor dedicado local de Windows (Squad 10.6): ModLoader monta el mod y añade `BP_VoteTalkLimit` como ruleset en las dos variantes, sin errores de Blueprint. La prueba de voz con jugadores sigue abierta.
+
 ---
 
 ## ✨ Características
@@ -82,6 +84,26 @@ Los dos zip son las carpetas del mod del SDK (`.mi`, `.uplugin`, icono, vista pr
 |---|---|---|
 | `VoteTalkLimit-server-only.zip` | `599c70eff6808c441df307442fdc092ae66181087352d3f16f8d47626d95086c` | variante server-only |
 | `VoteTalkLimit-client-rpc.zip` | `73dddefc3fd73bd020b8d52470c3766b0c9e8817e0129d6caf71afcdf425e1ee` | variante client-rpc |
+
+### Notas de configuración del servidor (comprobadas en un servidor local)
+
+Estos puntos salieron de ejecutar un servidor dedicado real, no de la documentación.
+
+- **Un mod local necesita un ID.** Un archivo `.mi` con `ID=0` se omite (`Failed to find a valid mod ID for VoteTalkLimit (needs to be uploaded to Steam)`). Para una prueba local pon cualquier número en `ID=` de la copia del servidor (y de la del cliente) y añádelo a `ModLoadOrder` en `ServerConfig/ModsConfig.cfg`. Para uso real, sube el mod al Workshop como elemento no listado.
+- **Empieza en la capa de ModLoader.** Pon `ModLoader_v1` primero en la rotación. ModLoader lee entonces `SquadGame/Saved/ModLoader/ModLoader.json`.
+- **`ModLoader.json` es de versión 2.** Las entradas son objetos con un indicador `true`. La forma antigua en lista se convierte sola y el archivo se reescribe:
+
+```json
+{
+  "Version": 2,
+  "rulesets": {
+    "/VoteTalkLimit/BP_VoteTalkLimit.BP_VoteTalkLimit_C": true
+  }
+}
+```
+
+- **Empaquetado en SDK 10.6.** El botón de empaquetar del Modding Hub puede acabar en `Cook failed` porque assets propios del SDK (`BP_MutableSoldier`, `SQSquidBot`) dan errores por el módulo `SQAimAssist` que falta. El mod en sí está bien. El tutorial muestra el comando `BuildCookRun` con `-IgnoreCookErrors` que funciona.
+- **Clientes.** Con `client-rpc` el mod también debe estar en el cliente. Hace falta una partida en marcha antes de que pueda empezar una votación, así que una prueba necesita al menos un jugador.
 
 ---
 

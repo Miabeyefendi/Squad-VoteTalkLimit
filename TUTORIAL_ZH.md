@@ -57,11 +57,11 @@ docs/guides/                         笔记
 
 **G. 保存。** 保存所有资源。
 
-**H. 打包 mod。** 对 `VoteTalkLimit` mod 使用 SDK 的 mod 打包命令。SDK 文档有说明。输出是服务器可以加载的已烘焙 mod。
+**H. 打包 mod。** 在 Modding Hub 中打开 Share 标签并点击 Package。如果以 `Cook failed` 结束，请使用[故障排查](#-故障排查)中的命令。输出里 `Content/Paks/WindowsServer` 供服务器使用，`Content/Paks/Windows` 供客户端使用。
 
 **I. 上传到 Workshop。** 把打包好的 mod 以私有或不公开的条目上传到 Steam Workshop，这样只有你的测试服务器会用到。
 
-**J. 添加到 ModLoader。** 在服务器上，按 ModLoader 页面的说明把 mod 作为 ruleset 添加。ModLoader 本身必须已经在服务器上。
+**J. 添加到 ModLoader。** 把打包好的 mod 文件夹连同 ModLoader mod 一起复制到服务器的 `SquadGame/Plugins/Mods/`。把 `ModLoader_v1` 层放在轮换的第一位，并在 `SquadGame/Saved/ModLoader/ModLoader.json` 中注册 ruleset（版本 2 的写法，见 README）。没有 Steam ID 的 mod（`.mi` 中 `ID=0`）会被跳过：本地测试时给它任意一个数字，或以不公开条目上传。
 
 **K. 可选设置。** 在服务器配置文件夹中创建或编辑 `CustomOptions.cfg`。见[设置](#️-设置)。
 
@@ -143,6 +143,22 @@ docs/guides/                         笔记
 ### 有人一直处于静音
 
 从 ModLoader 中移除 mod 并重启服务器，然后报告。这种情况不应发生。
+
+
+### 打包以 Cook failed 结束
+
+SDK 自带资源 `BP_MutableSoldier` 和 `SQSquidBot` 因 SDK 缺少 `SQAimAssist` 模块而报错，cook 把它们算作失败。原因不在 mod。关闭编辑器，然后手动运行带 `-IgnoreCookErrors` 的 cook：
+
+```powershell
+$s = 'C:\path\to\SquadEditor'
+& "$s\UnrealEngine\Engine\Build\BatchFiles\RunUAT.bat" -noP4 BuildCookRun -Project="$s\Squad\SquadGame.uproject" -dlcname=VoteTalkLimit -cook -stage -pak -iostore -compressed -SKIPEDITORCONTENT -BasedOnReleaseVersion=20 -DLCIncludeEngineContent -manifests -VersionCookedContent -IgnoreCookErrors -AdditionalCookerOptions="-IgnoreWeaponSkinRefresh -cooksinglepackagenorefs -nullrhi -IgnoreCookErrors" -server -targetplatform=Win64
+```
+
+结果位于 `Squad/Plugins/Mods/VoteTalkLimit/Saved/StagedBuilds/WindowsServer/SquadGame/Plugins/Mods/VoteTalkLimit`（服务器），客户端在 `Windows` 下的同一路径。把 `.mi` 文件复制到 `.uplugin` 旁边。
+
+### 服务器跳过了 mod
+
+日志里写着 `Failed to find a valid mod ID for VoteTalkLimit (needs to be uploaded to Steam)`。在 `.mi` 的 `ID=` 中填一个数字，并加入 `ServerConfig/ModsConfig.cfg` 的 `ModLoadOrder`，或者把 mod 作为不公开的 Workshop 条目上传。
 
 ---
 

@@ -28,6 +28,8 @@
 
 The server-side logic (the vote gate, the talk budget, the notices, the settings) compiles and follows the Squad SDK documentation. The open question is the last step: whether a server can actually cut a player's voice for everyone else. The SDK has no documented server call for that, and the voice functions it does expose look client-side. This repository ships two ways to try it so that a live test with two players can tell which one, if any, works.
 
+**Loading was checked on 2026-11-22** on a local Windows dedicated server (Squad 10.6): ModLoader mounts the mod and adds `BP_VoteTalkLimit` as a ruleset, for both variants, without Blueprint errors. The voice test with players is still open.
+
 ---
 
 ## ✨ Highlights
@@ -82,6 +84,26 @@ The two zips are the SDK mod folders (`.mi`, `.uplugin`, icon, preview and the B
 |---|---|---|
 | `VoteTalkLimit-server-only.zip` | `599c70eff6808c441df307442fdc092ae66181087352d3f16f8d47626d95086c` | server-only variant |
 | `VoteTalkLimit-client-rpc.zip` | `73dddefc3fd73bd020b8d52470c3766b0c9e8817e0129d6caf71afcdf425e1ee` | client-rpc variant |
+
+### Server setup notes (checked on a local server)
+
+These points were found by running a real dedicated server, not from documentation.
+
+- **A local mod needs an ID.** A `.mi` file with `ID=0` is skipped (`Failed to find a valid mod ID for VoteTalkLimit (needs to be uploaded to Steam)`). For a local test put any number in `ID=` of the server copy (and of the client copy) and add it to `ModLoadOrder` in `ServerConfig/ModsConfig.cfg`. For real use, upload the mod to the Workshop as an unlisted item.
+- **Start on the ModLoader layer.** Put `ModLoader_v1` first in the rotation. ModLoader then reads `SquadGame/Saved/ModLoader/ModLoader.json`.
+- **`ModLoader.json` is version 2.** Entries are objects with a `true` flag. An old list form is converted automatically and the file is rewritten:
+
+```json
+{
+  "Version": 2,
+  "rulesets": {
+    "/VoteTalkLimit/BP_VoteTalkLimit.BP_VoteTalkLimit_C": true
+  }
+}
+```
+
+- **Packaging in SDK 10.6.** The Modding Hub package button can end with `Cook failed` because stock SDK assets (`BP_MutableSoldier`, `SQSquidBot`) log errors for the missing `SQAimAssist` module. The mod itself is fine. The tutorial shows the `BuildCookRun` command with `-IgnoreCookErrors` that works.
+- **Clients.** With `client-rpc` the mod must also be on the client. A match has to be running before a vote can start, so a test needs at least one player.
 
 ---
 
