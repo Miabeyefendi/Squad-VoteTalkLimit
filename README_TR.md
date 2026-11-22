@@ -96,6 +96,8 @@ Aynı anda tek varyant kur. İkisi de `VoteTalkLimit` mod adını kullanır.
 
 İki `-cooked` zip paketlenmiş modu içerir (`.mi`, `.uplugin`, simge, önizleme ve sunucu ile istemci için `Content/Paks` klasörleri). [Rehberdeki](./TUTORIAL_TR.md) SDK 10.6 cook komutuyla üretildi ve yerel sunucuda denendi. `.mi` dosyalarında `ID=0` var, önce bir ID ver, aşağıdaki sunucu kurulum notlarına bak.
 
+`client-rpc` varyantı (0.1.1) test için Steam Workshop'a da yüklendi, ID `3844006456` ([bağlantı](https://steamcommunity.com/sharedfiles/filedetails/?id=3844006456)). Şimdilik gizli, yani görünürlük değiştirilene kadar bağlantı sadece yükleyen hesapta çalışır. Sunucular Workshop modlarını anonim indirir, bu yüzden gizli bir öğe henüz sunucuda kullanılamaz. Bu depodaki `.mi` dosyaları `ID=0` olarak kalır.
+
 ### Sunucu kurulum notları (yerel sunucuda denendi)
 
 Bu maddeler belgeden değil, gerçek bir dedicated sunucu çalıştırılarak bulundu.

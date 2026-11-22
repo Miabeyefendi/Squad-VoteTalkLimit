@@ -8,6 +8,12 @@ All notable changes to **Squad-VoteTalkLimit** are recorded here. The format fol
 
 ---
 
+## [Unreleased]
+
+### Documentation
+
+- The `client-rpc` variant is uploaded to the Steam Workshop for testing (ID `3844006456`), hidden for now. The README says so in all five languages
+
 ## [0.1.1] - 2026-11-22
 
 ### Added
