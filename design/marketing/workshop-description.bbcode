@@ -1,0 +1,120 @@
+[img]https://raw.githubusercontent.com/Miabeyefendi/Squad-VoteTalkLimit/main/assets/banner-dark.png[/img]
+
+[h1]Vote Talk Limit - stop "top mid top mid" spam during the map vote[/h1]
+
+At the end of a match, Squad opens the map vote and then the faction votes. That is the moment when one player repeats the same call over and over and nobody else can be heard. Vote Talk Limit gives every player a small talk budget [b]only while a vote is running[/b]. Normal speech passes untouched. A machine-gun repeat of the same call runs out of budget and gets a short mute. When the vote ends, everybody can talk again at once.
+
+[b]Experimental.[/b] See "Status" below before you put this on a real server.
+
+[hr][/hr]
+
+[h2]Status - please read[/h2]
+
+[list]
+[*]Both variants load on a Windows dedicated server (Squad 10.6) with ModLoader, and ran in the SDK editor (Play In Editor, one local player, votes started from a script) with no Blueprint errors and no crash. The vote gate, the talk budget, the mute, the helper actor and the cleanup behaved as designed.
+[*][b]Not verified:[/b] whether the voice is really cut for [i]other[/i] players (that needs a second player on a live server), the on-screen notices, and reading [b]CustomOptions.cfg[/b].
+[*]The SDK has no documented server call that mutes a player for everyone else. This item is the [b]client-rpc[/b] variant, built for the case where the mute functions only work on the client. It may not work. Test results are very welcome.
+[/list]
+
+[hr][/hr]
+
+[h2]What players see[/h2]
+
+[list]
+[*]When the limit starts, an info line tells them about the budget.
+[*]One second before the budget runs out, a warning.
+[*]A line when they are muted, and another when they can talk again.
+[*]The scoreboard before the votes is [b]never[/b] limited. Nothing stays muted after the vote, after a disconnect or after a crash.
+[/list]
+
+[h2]How it works</h2>
+
+[olist]
+[*]A ruleset watches the vote state. The limit is active only while a map vote or a faction vote is running.
+[*]Every player gets a budget of talk time (default 4 seconds). Talking drains it. Not talking refills it slowly.
+[*]An empty budget means a mute for a fixed time (default 10 seconds). The player then comes back with part of the budget.
+[*]In this variant the server spawns a tiny helper object owned by the speaker. It reaches that player's client only, toggles the client's own voice, and is destroyed when the mute ends or the vote ends.
+[*]When the vote ends, every helper is destroyed and every budget is cleared.
+[/olist]
+
+The budget refills at T / (T + M) seconds of talk per second. With the defaults (T = 4, M = 10), a continuous sentence of up to 5.6 seconds passes whole. In a talk simulation (a model, not live data), a spam pattern stayed audible about 30% of the time against 73% without the mod.
+
+[hr][/hr]
+
+[h2]Requirements[/h2]
+
+[list]
+[*]A Windows Squad dedicated server.
+[*][url=https://steamcommunity.com/sharedfiles/filedetails/?id=3516838562]ModLoader[/url] on the server. Players download ModLoader and this item automatically when they join (about 3 MB). They do nothing by hand.
+[*]The Epic Games version of Squad does not support mods, so Epic players cannot join a server running this.
+[*]This item does [b]not[/b] work on its own, and there is no version without ModLoader: SquadJS has no voice control.
+[/list]
+
+[h2]Server setup[/h2]
+
+[olist]
+[*]Download ModLoader and this item with SteamCMD:
+[code]workshop_download_item 393380 3516838562
+workshop_download_item 393380 3844576818[/code]
+Put both folders into [b]SquadGame/Plugins/Mods/[/b].
+[*]In [b]SquadGame/ServerConfig/ModsConfig.cfg[/b] list both IDs, ModLoader first:
+[code]ModLoadOrder=3516838562,3844576818[/code]
+[*]In [b]SquadGame/ServerConfig/LayerVoting.cfg[/b] make [b]ModLoader_v1[/b] the very first line, above your normal layers.
+[*]Create or edit [b]SquadGame/Saved/ModLoader/ModLoader.json[/b] and register the ruleset (version 2 format, the values are objects with a true flag):
+[code]{
+  "Version": 2,
+  "rulesets": {
+    "/VoteTalkLimit/BP_VoteTalkLimit.BP_VoteTalkLimit_C": true
+  }
+}[/code]
+If the file already has other entries, only add the line inside "rulesets". An older list-style file is converted by ModLoader automatically.
+[*]Restart the server and look in the log for the mod loading. A working start prints that the modded ruleset was added.
+[*]Join with a second player, let a match end, and during the map vote have one player repeat a short call. Write down whether they are cut after about four seconds and heard again after the mute.
+[/olist]
+
+[hr][/hr]
+
+[h2]Settings (optional)[/h2]
+
+Settings are read from the server's [b]CustomOptions.cfg[/b]. Every setting has a default inside the mod, so the file is optional.
+
+[table]
+[tr][th]Setting[/th][th]Default[/th][th]Meaning[/th][/tr]
+[tr][td][b]VTL_Enabled[/b][/td][td]true[/td][td]Master switch.[/td][/tr]
+[tr][td][b]VTL_TalkSeconds[/b][/td][td]4.0[/td][td]Talk budget in seconds (T).[/td][/tr]
+[tr][td][b]VTL_MuteSeconds[/b][/td][td]10.0[/td][td]Length of one mute in seconds (M).[/td][/tr]
+[/table]
+
+Example, one line each, no spaces around the equals sign:
+[code]VTL_TalkSeconds=3.0
+VTL_MuteSeconds=8.0[/code]
+
+The file syntax has not been checked on a live server. If a setting does not seem to apply, the built-in default is used. With T = 3 and M = 8, a 5 second sentence is cut at about 4.1 seconds.
+
+[hr][/hr]
+
+[h2]FAQ[/h2]
+
+[b]Do players need to download anything?[/b]
+Players download ModLoader and this item automatically when they join a server that lists them. Nothing by hand.
+
+[b]Will it mute people on the scoreboard or in the match?[/b]
+No. The limit only exists during the end-of-match map and faction votes.
+
+[b]Can someone stay muted after leaving or after a crash?[/b]
+The design says no: the mute lives and dies with the helper object, and it always dies with the vote. This still has to be confirmed on a live server. Please report any case where it is wrong.
+
+[b]Is there a version that works without client downloads?[/b]
+A [b]server-only[/b] variant exists on GitHub. It asks the server to mute the speaker on every listener. It probably does not work, because the voice functions look client-side, but it is there for testing. It is not on the Workshop.
+
+[b]Why are the notices in English?[/b]
+They are plain strings in the Blueprint and can be edited in the Squad SDK. The source is on GitHub.
+
+[b]Is it tested?[/b]
+It loads and runs without errors with one player. The real voice cut with two players is still open. This is the main thing I need help testing.
+
+[hr][/hr]
+
+Step-by-step tutorial (five languages), source code, both variants and changelog: [url=https://github.com/Miabeyefendi/Squad-VoteTalkLimit]github.com/Miabeyefendi/Squad-VoteTalkLimit[/url]
+
+Bug reports and test results: [url=https://github.com/Miabeyefendi/Squad-VoteTalkLimit/issues]github.com/Miabeyefendi/Squad-VoteTalkLimit/issues[/url]

@@ -14,6 +14,8 @@ All notable changes to **Squad-VoteTalkLimit** are recorded here. The format fol
 
 - The `client-rpc` variant is uploaded to the Steam Workshop for testing (ID `3844576818`), set to Unlisted. The README says so in all five languages
 - FAQ entry in all five languages: there is no version without ModLoader, because SquadJS has no voice control
+- The Workshop page text (banner, status, server setup steps, settings, FAQ) is kept in `design/marketing/workshop-description.bbcode`
+- The Workshop preview and icon now show the Vote Talk Limit emblem instead of the wrong one
 
 ## [0.1.1] - 2026-11-22
 
