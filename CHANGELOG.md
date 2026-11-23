@@ -12,7 +12,7 @@ All notable changes to **Squad-VoteTalkLimit** are recorded here. The format fol
 
 ### Documentation
 
-- The `client-rpc` variant is uploaded to the Steam Workshop for testing (ID `3844006456`), hidden for now. The README says so in all five languages
+- The `client-rpc` variant is uploaded to the Steam Workshop for testing (ID `3844576818`), set to Unlisted. The README says so in all five languages
 - FAQ entry in all five languages: there is no version without ModLoader, because SquadJS has no voice control
 
 ## [0.1.1] - 2026-11-22

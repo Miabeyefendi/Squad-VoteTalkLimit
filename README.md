@@ -96,7 +96,7 @@ The two zips are the SDK mod folders (`.mi`, `.uplugin`, icon, preview and the B
 
 The two `-cooked` zips hold the packaged mod (`.mi`, `.uplugin`, icon, preview and the `Content/Paks` folders for the server and the client). They were built with the SDK 10.6 cook command from the [tutorial](./TUTORIAL.md) and checked on a local server. Their `.mi` has `ID=0`, so give it an ID first, see the server setup notes below.
 
-The `client-rpc` variant (0.1.1) is also uploaded to the Steam Workshop for testing, ID `3844006456` ([link](https://steamcommunity.com/sharedfiles/filedetails/?id=3844006456)). It is hidden for now, so the link works only for the account that uploaded it until the visibility is changed. Servers download Workshop mods anonymously, so a hidden item cannot be used on a server yet. The `.mi` files in this repository keep `ID=0`.
+The `client-rpc` variant (0.1.1) is also uploaded to the Steam Workshop for testing, ID `3844576818` ([link](https://steamcommunity.com/sharedfiles/filedetails/?id=3844576818)). It is set to Unlisted: anyone with the link can open it and servers can download it, but it does not show up in Workshop search. The `.mi` files in this repository keep `ID=0`.
 
 ### Server setup notes (checked on a local server)
 
